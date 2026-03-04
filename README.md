@@ -17,7 +17,7 @@
 
 ```bash
 # Clone and setup
-git clone <your-repo-url>
+git clone https://github.com/vidyavipul/socketio-chat
 cd live-chat
 
 # Install dependencies
