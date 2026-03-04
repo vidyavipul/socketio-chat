@@ -6,7 +6,11 @@ A real-time chat application built with Node.js, Express, and Socket.io. This ap
 
 - **Real-time Communication**: Instant message delivery to all connected users
 - **No Page Refresh**: Uses WebSocket technology through Socket.io for seamless updates
-- **Simple Interface**: Clean and user-friendly UI
+- **User Nicknames**: Each user can set their own display name when joining
+- **Active User List**: See all connected users in a dedicated sidebar with real-time updates
+- **Typing Indicators**: Know when someone is typing a message (updates in real-time)
+- **User Join/Leave Notifications**: Get notified when users connect or disconnect
+- **Simple Interface**: Clean and user-friendly UI with improved design
 - **Broadcast Messaging**: All messages are broadcast to every connected client
 
 ## Technology Stack
@@ -69,21 +73,29 @@ live-chat/
 1. **Server Setup** (`server.js`):
    - Initializes an Express server on port 3000
    - Sets up Socket.io for WebSocket connections
-   - Listens for 'chat message' events from clients
-   - Broadcasts messages to all connected users
+   - Maintains an active user map with socket IDs and usernames
+   - Handles 'user join', 'chat message', 'typing', and 'disconnect' events
+   - Broadcasts user list updates to all clients
 
 2. **Frontend** (`index.html`):
    - Loads Socket.io client library
-   - Provides a simple form for message input
-   - Displays all received messages in a list
-   - Automatically scrolls to show new messages
+   - Prompts user for a nickname on page load
+   - Displays messages with usernames in the chat area
+   - Shows active users in a dedicated sidebar
+   - Displays typing indicators when users are composing messages
+   - Automatically scrolls to show new messages and notifications
+   - Provides visual feedback for user join/leave events
 
 ## Event Flow
 
-- **Connection**: When a user connects, a connection event is logged
-- **Message Send**: User submits a form → client emits 'chat message' event to server
-- **Broadcast**: Server receives the message and emits it to all connected users
-- **Disconnect**: When a user closes the connection, a disconnect event is logged
+- **Connection**: When a user connects, they are prompted for a username
+- **User Join**: User submits their username → server stores user info and broadcasts to all clients
+- **User List Update**: Server sends the updated user list to all connected clients
+- **Message Send**: User submits a form → client emits 'chat message' event to server with username and message
+- **Broadcast**: Server receives the message and emits it to all connected users with username context
+- **Typing Indicator**: As user types → 'typing' event sent to server → server broadcasts to other clients
+- **User Left**: When a user disconnects → server removes from active users list and notifies others
+- **Disconnect**: When a user closes the connection, a disconnect event is logged and others are notified
 
 ## Dependencies
 
@@ -92,14 +104,18 @@ live-chat/
 
 ## Future Enhancements
 
-- User authentication and login system
+- User authentication and login system (persistent usernames)
 - Private messaging between users
 - Message history storage in a database
-- User typing indicators
+- Chat rooms/channels for topic-based conversations
+- Message timestamps with formatting
+- User profile pictures/avatars
 - Emoji support and message reactions
-- Chat rooms/channels
-- Message timestamps
-- User list display
+- Edit and delete messages functionality
+- Search message history
+- Dark/Light theme toggle
+- Admin moderation tools
+- Message rich formatting (bold, italic, links)
 
 ## License
 
