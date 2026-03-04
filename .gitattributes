@@ -1,0 +1,9 @@
+# Tell GitHub to count this as JavaScript repo
+*.js linguist-language=JavaScript
+server.js linguist-language=JavaScript
+
+# Mark HTML as documentation since it's mostly UI markup
+index.html linguist-documentation
+
+# Treat common non-source files as documentation
+*.md linguist-documentation
